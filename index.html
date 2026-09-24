@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stopwatch</title>
+
+  <!-- Apply saved theme before the page paints -->
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem("stopwatch-theme") || "neon";
+    } catch (_) {
+      document.documentElement.dataset.theme = "neon";
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-state="ready">
+  <div class="bg" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+  </div>
+
+  <main class="app">
+
+    <!-- Dial + digital readout -->
+    <section class="stage" aria-label="Stopwatch">
+      <div class="dial-wrap" id="dialWrap">
+        <svg class="dial" viewBox="0 0 320 320" aria-hidden="true">
+          <defs>
+            <linearGradient id="ringGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop class="stop-1" offset="0" />
+              <stop class="stop-2" offset="0.55" />
+              <stop class="stop-3" offset="1" />
+            </linearGradient>
+          </defs>
+
+          <circle class="ring-track" cx="160" cy="160" r="142" />
+          <circle
+            class="ring-progress"
+            id="ringProgress"
+            cx="160"
+            cy="160"
+            r="142"
+            transform="rotate(-90 160 160)"
+          />
+          <g id="ticks"></g>
+          <g id="marker">
+            <circle class="marker-dot" cx="160" cy="18" r="8" />
+          </g>
+        </svg>
+
+        <div class="readout" role="timer" aria-live="off">
+          <div class="time" id="time">
+            <span id="main">00:00</span><span class="cs">.<span id="cs">00</span></span>
+          </div>
+          <div class="status" id="status">Ready</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-ghost" id="lapBtn" disabled>Lap</button>
+        <button class="btn btn-primary" id="toggleBtn">Start</button>
+        <button class="btn btn-ghost btn-reset" id="resetBtn" disabled>Reset</button>
+      </div>
+
+      <div class="themes" role="radiogroup" aria-label="Colour theme">
+        <button class="swatch" data-theme="neon" role="radio" aria-label="Neon" title="Neon"></button>
+        <button class="swatch" data-theme="sunset" role="radio" aria-label="Sunset" title="Sunset"></button>
+        <button class="swatch" data-theme="ocean" role="radio" aria-label="Ocean" title="Ocean"></button>
+        <button class="swatch" data-theme="forest" role="radio" aria-label="Forest" title="Forest"></button>
+        <button class="swatch" data-theme="candy" role="radio" aria-label="Candy" title="Candy"></button>
+      </div>
+
+      <p class="hint">
+        Keyboard: <kbd>Space</kbd> start or pause, <kbd>L</kbd> lap, <kbd>R</kbd> reset
+      </p>
+    </section>
+
+    <!-- Laps -->
+    <section class="laps" aria-label="Laps">
+      <header class="laps-head">
+        <h2>Laps</h2>
+        <span class="laps-count" id="lapCount">0 recorded</span>
+      </header>
+
+      <div class="laps-cols" aria-hidden="true">
+        <span>Lap</span>
+        <span>Split</span>
+        <span>Total</span>
+      </div>
+
+      <ol class="lap-list" id="lapList"></ol>
+
+      <p class="empty" id="emptyState">
+        No laps yet. Press Lap while the stopwatch is running to record a split.
+      </p>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
