@@ -61,3 +61,6 @@ The Lap button works only while the stopwatch is running.
 
 Works in the latest versions of Chrome, Edge, Firefox, Safari and mobile browsers.
 
+#Demo link 
+https://gaurikhamankar123-star.github.io/SCT_WD_2/
+
